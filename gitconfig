@@ -1,0 +1,25 @@
+[user]
+	name = Matt Campbell
+	email = xenolinguist@gmail.com
+[github]
+	user = xenolinguist
+	token = ddd28b41677de958d68e033d7802355f
+[color]
+	ui = auto
+    status = auto
+    commit = auto
+    diff = auto
+    branch = auto
+[alias]
+    st = status
+    co = checkout
+    ci = commit
+    cp = cherry-pick
+    br = branch
+    brup = !sh -c 'git branch --set-upstream $1 origin/$1' -
+[http]
+    sslverify = 0
+[credential]
+	helper = cache
+[status]
+	displayCommentPrefix = true

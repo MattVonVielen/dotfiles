@@ -66,4 +66,5 @@ let g:Powerline_symbols="fancy"
 colors ir_black
 
 set mouse=a
+set ttymouse=xterm2
 set title

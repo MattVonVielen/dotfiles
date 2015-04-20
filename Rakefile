@@ -1,13 +1,15 @@
 
 linkable = Dir['*'].reject{|f| f == 'Rakefile'}
+links = []
 
-linkable.each do |source|
+linkable.each do |entry|
+  source = File.expand_path entry
   destination = File.join(ENV['HOME'], '.' + entry)
-
-  file source => 
+  links << destination
 
   file destination => source do
     FileUtils.ln_s source, destination
   end
 end
 
+task :default => links

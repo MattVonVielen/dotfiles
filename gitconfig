@@ -15,6 +15,7 @@
     ci = commit
     cp = cherry-pick
     br = branch
+		fixup = commit --amend -C HEAD
     brup = !sh -c 'git branch --set-upstream $1 origin/$1' -
 [http]
     sslverify = 0

@@ -24,6 +24,7 @@ Bundle 'tpope/vim-haml'
 Bundle 'elzr/vim-json'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'brookhong/cscope.vim'
+Bundle 'rust-lang/rust.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'

@@ -14,4 +14,10 @@ linkable.each do |entry|
   end
 end
 
-task :default => links
+vundle = 'vim/bundle/Vundle.vim' 
+file vundle do
+  sh 'git clone https://github.com/VundleVim/Vundle.Vim vim/bundle/Vundle.vim'
+  sh 'vim +PluginInstall +qall'
+end
+
+task :default => links + [ vundle ]

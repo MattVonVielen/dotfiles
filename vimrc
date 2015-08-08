@@ -63,7 +63,7 @@ map <C-S-TAB> :tabprev<CR>
 
 let g:Powerline_symbols="fancy"
 
-colors ir_black
+silent! colors ir_black
 
 set mouse=a
 set ttymouse=xterm2

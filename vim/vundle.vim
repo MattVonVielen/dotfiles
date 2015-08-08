@@ -26,6 +26,11 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'brookhong/cscope.vim'
 Bundle 'rust-lang/rust.vim'
 
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'vadv/vim-chef'
+
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...

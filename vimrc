@@ -54,6 +54,9 @@ vmap <C-Down> ]egv
 " enable ruby folding, default to unfolded
 let ruby_fold=1
 set foldlevelstart=99
+au FileType ruby set tabstop=2 softtabstop=2 shiftwidth=2
+
+au FileType markdown set wrap
 
 " Show (partial) command in the status line
 set showcmd

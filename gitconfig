@@ -15,11 +15,15 @@
     ci = commit
     cp = cherry-pick
     br = branch
-		fixup = commit --amend -C HEAD
-    brup = !sh -c 'git branch --set-upstream $1 origin/$1' -
-[http]
-    sslverify = 0
+    fixup = commit --amend -C HEAD
+    fall = fetch --all --prune
+    up = rebase origin/master
+    dup = rebase delivery/master
 [credential]
 	helper = cache
 [status]
 	displayCommentPrefix = true
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

@@ -1,4 +1,8 @@
 "*":
+  "atom-typescript": {}
+  "autocomplete-elixir":
+    elixirPath: "/usr/local/bin/elixir"
+    erlangHome: "/usr/local/opt/erlang/bin"
   autosave:
     enabled: true
   core: {}
@@ -7,16 +11,25 @@
     invisibles: {}
     tabLength: 4
     zoomFontWhenCtrlScrolling: true
+  emmet: {}
   "exception-reporting":
     userId: "af322b58-e003-1f36-6ad5-2e1c956cc917"
+  gist: {}
   "git-status": {}
   linter:
-    errorPanelHeight: 106
+    errorPanelHeight: 70
+  "linter-elixirc":
+    elixircPath: "/usr/local/bin/elixirc"
+    mixPath: "/usr/local/bin/mix"
   "linter-erlc":
     includeDirs: "apps/delivery/include"
     pa: "apps/delivery/ebin"
   "markdown-preview":
     useGitHubStyle: true
+  "spell-check":
+    grammars: [
+      "nothing"
+    ]
   "terminal-plus":
     core: {}
     style:
@@ -26,6 +39,8 @@
   "tree-view":
     hideIgnoredNames: true
     hideVcsIgnoredFiles: true
+    showOnRightSide: true
+    squashDirectoryNames: true
   "vim-mode":
     startInInsertMode: true
     useClipboardAsDefaultRegister: true

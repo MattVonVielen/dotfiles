@@ -1,5 +1,5 @@
-
-linkable = Dir['*'].reject{|f| f == 'Rakefile'}
+DO_NOT_LINK = [ 'Rakefile', 'README.md', 'backups' ]
+linkable = Dir['*'].reject{ |f| DO_NOT_LINK.include? f }
 links = []
 
 linkable.each do |entry|

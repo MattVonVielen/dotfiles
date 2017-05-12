@@ -18,7 +18,6 @@
     fixup = commit --amend -C HEAD
     fall = fetch --all --prune
     up = rebase origin/master
-    dup = rebase delivery/master
 [credential]
 	helper = cache
 [status]

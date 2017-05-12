@@ -32,8 +32,9 @@ function parse_git_branch {
  # Capture the output of the "git status" command.
  git_status="$(git status 2> /dev/null)"
  git_stash="$(git stash list 2> /dev/null)"
+ clean_status_pattern="working (directory|tree) clean"
  # Set color based on clean/staged/dirty.
- if [[ ${git_status} =~ "working directory clean" ]]; then
+ if [[ ${git_status} =~ ${clean_status_pattern=} ]]; then
    state="${GREEN}"
  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
    state="${YELLOW}"

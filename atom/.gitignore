@@ -1,9 +1,0 @@
-.apm
-blob-store
-git-time-machine
-packages
-storage
-compile-cache
-dev
-.npm
-.node-gyp

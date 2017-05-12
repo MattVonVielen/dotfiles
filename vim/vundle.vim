@@ -21,7 +21,11 @@ Plugin 'wgibbs/vim-irblack'
 Plugin 'ervandew/supertab'
 Plugin 'godlygeek/tabular'
 
-Plugin 'jimenezrick/vimerl'
+Plugin 'vim-erlang/vim-erlang-runtime'
+Plugin 'vim-erlang/vim-erlang-compiler'
+Plugin 'vim-erlang/vim-erlang-omnicomplete'
+Plugin 'vim-erlang/vim-erlang-tags'
+
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-haml'
 Plugin 'elzr/vim-json'

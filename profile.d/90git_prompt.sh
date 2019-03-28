@@ -1,86 +1,71 @@
-#!/bin/bash
-#
 # Set our bash prompt according to the branch/status of the current git 
 # repository.
 #
-# Taken from http://gist.github.com/31934
+# Refactored from http://gist.github.com/31934
 
-        RED="\[\e[0;31m\]"
-      GREEN="\[\e[0;32m\]"
-     YELLOW="\[\e[0;33m\]"
-       BLUE="\[\e[0;34m\]"
-    MAGENTA="\[\e[0;35m\]"
-       CYAN="\[\e[0;36m\]"
-       GRAY="\[\e[0;37m\]"
-  LIGHT_RED="\[\e[1;31m\]"
-LIGHT_GREEN="\[\e[1;32m\]"
-LIGHT_YELLOW="\[\e[1;33m\]"
- LIGHT_BLUE="\[\e[1;34m\]"
-LIGHT_MAGENTA="\[\e[1;35m\]"
- LIGHT_CYAN="\[\e[1;36m\]"
-      WHITE="\[\e[1;37m\]"
- COLOR_NONE="\[\e[0m\]"
+function git_info {
+  # Only display git info if we're inside a git repository.
+  git branch > /dev/null 2>&1 || return 1
 
-function is_git_repository {
- git branch > /dev/null 2>&1
-}
+  # Capture the output of the "git status" command.
+  git_status="$(git status 2> /dev/null)"
 
-function parse_git_branch {
- # Only display git info if we're inside a git repository.
- is_git_repository || return 1
- 
- # Capture the output of the "git status" command.
- git_status="$(git status 2> /dev/null)"
- git_stash="$(git stash list 2> /dev/null)"
- clean_status_pattern="working (directory|tree) clean"
- # Set color based on clean/staged/dirty.
- if [[ ${git_status} =~ ${clean_status_pattern=} ]]; then
-   state="${GREEN}"
- elif [[ ${git_status} =~ "Changes to be committed" ]]; then
-   state="${YELLOW}"
- else
-   state="${RED}"
- fi
- if [[ -n ${git_stash} ]]; then
-   stash="${MAGENTA}*"
- fi
-  
- # Set arrow icon based on status against remote.
- if [[ ${git_status} =~ "Your branch is ahead" ]]; then
-   remote="↑"
- elif [[ ${git_status} =~ "Your branch is behind" ]]; then
-   remote="↓"
- elif [[ ${git_status} =~ "Your branch and "(.*)" have diverged" ]]; then
-   remote="↔"
- fi
- 
- # Get the name of the branch.
- branch_pattern="On branch ([^${IFS}]*)"    
- if [[ ${git_status} =~ ${branch_pattern} ]]; then
-   branch="(${BASH_REMATCH[1]})"
- else
-   branch="{Detached HEAD}"
- fi
+  git_prompt_text=' '
+  # Get the name of the branch.
+  branch_pattern="On branch ([^${IFS}]*)"
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    git_prompt_text+="(${BASH_REMATCH[1]})"
+  else
+    git_prompt_text+="{Detached HEAD}"
+  fi
 
- # Display the prompt.
- echo "${state}${branch}${remote}${stash}${COLOR_NONE}"
+  # Set arrow icon based on status against remote.
+  if [[ ${git_status} =~ "Your branch is ahead" ]]; then
+    git_prompt_text+="↑"
+  elif [[ ${git_status} =~ "Your branch is behind" ]]; then
+    git_prompt_text+="↓"
+  elif [[ ${git_status} =~ "Your branch and "(.*)" have diverged" ]]; then
+    git_prompt_text+="↔"
+  fi
+
+  # Indicate whether stashes exist
+  git_stash="$(git stash list 2> /dev/null)"
+  if [[ -n ${git_stash} ]]; then
+    git_prompt_text+="$(colorize ${MAGENTA} '*')"
+  fi
+
+  # Set color based on clean/staged/dirty.
+  clean_status_pattern="working (directory|tree) clean"
+  if [[ ${git_status} =~ ${clean_status_pattern=} ]]; then
+    colorize ${GREEN} "${git_prompt_text}"
+  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
+    colorize ${YELLOW} "${git_prompt_text}"
+  else
+    colorize ${RED} "${git_prompt_text}"
+  fi
 }
 
 function prompt_symbol () {
- # Set color of dollar prompt based on return value of previous command.
- if test $1 -eq 0
- then
-     echo "\$"
- else
-     echo "${RED}\$${COLOR_NONE}"
- fi
+  # Set color of dollar prompt based on return value of previous command.
+  if test $1 -eq 0
+  then
+    echo "\$"
+  else
+    colorize ${RED} '$'
+  fi
 }
 
 function prompt_func () {
- last_return_value=$?
- #PS1="${CYAN}\u@\h ${YELLOW}\w${COLOR_NONE} $(parse_git_branch)\n$(prompt_symbol $last_return_value) "
- PS1="${CYAN}\h${COLOR_NONE}:${YELLOW}\W${COLOR_NONE}$(parse_git_branch)$(prompt_symbol $last_return_value) "
- echo -n -e "\033]0;$USER@$HOSTNAME:$PWD\007\n"
+  last_return_value=$?
+
+  # Interactive terminal prompt string:
+  host=$(colorize ${CYAN} '\h') # hostname
+  dir=$(colorize ${YELLOW} '\W') # short working dir
+  sym="$(prompt_symbol $last_return_value)"
+  PS1="${host}:${dir}$(git_info)${sym} "
+
+  # XTerm window title:
+  echo -n -e "\033]0;$USER@$HOSTNAME:$PWD\007\n"
 }
 
 PROMPT_COMMAND=prompt_func

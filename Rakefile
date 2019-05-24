@@ -6,7 +6,7 @@ def symlink_task(source, destination)
   LINKS << destination
   backup_destination = File.exists? destination
   file destination => source do
-    FileUtils.mv destination, File.join('backups', entry) if backup_destination
+    FileUtils.mv destination, File.join('backups', File.basename(destination)) if backup_destination
     FileUtils.ln_s source, destination
   end
 end
